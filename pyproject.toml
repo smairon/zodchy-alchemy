@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "zodchy-alchemy"
+version = "0.1.0"
+description = ""
+authors = ["Feofilaktov, Sergey <man@smairon.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+sqlalchemy = "^2.0.4"
+zodchy = "^0.4.4"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+sqlalchemy-schema-factory = "^0.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
