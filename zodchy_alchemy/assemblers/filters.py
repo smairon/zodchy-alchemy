@@ -20,7 +20,7 @@ class FilterAssembler:
         }
         operations_stack: deque = deque(
             list(
-                e for e in expression
+                e for e in expression or ()
                 if e is AND or e is OR or zodchy.operators.FilterBit in e.operation.__class__.__mro__
             )
         )

@@ -13,8 +13,11 @@ from . import schema
 def assembler(base_query):
     return QueryAssembler(base_query)
 
+def test_trivial(assembler):
+    q = str(assembler())
+    assert q == 'SELECT firmware.id, firmware.uri, firmware.version \nFROM firmware'
 
-def test_simple(assembler):
+def test_filters(assembler):
     q = str(assembler(
         contracts.Clause(
             schema.firmware.c.id,

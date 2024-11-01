@@ -16,7 +16,7 @@ class JoinsAssembler:
         self._prepare()
 
     def __call__(self, expression: ClauseExpression) -> sqlalchemy.Select:
-        for clause in expression:
+        for clause in expression or ():
             if isinstance(clause, Clause) and isinstance(clause.operation, zodchy.operators.FilterBit):
                 self._build_link(clause)
         return self._query
