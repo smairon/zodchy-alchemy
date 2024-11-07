@@ -17,10 +17,10 @@ class QueryAdapter:
 
     def __call__(self, query: zodchy.codex.cqea.Query) -> collections.abc.Iterable[Clause]:
         for name, value in query:
-            yield Clause(self._names_map[name], value)
+            yield Clause(self._build_column(name), value)
 
     def _build_column(self, field_name: str) -> sqlalchemy.Column:
-        if column := self._names_map.get(field_name):
+        if self._names_map is not None and (column := self._names_map.get(field_name)):
             if isinstance(column, sqlalchemy.Column):
                 return column
             elif self._default_table is not None:
@@ -32,5 +32,3 @@ class QueryAdapter:
                 return getattr(self._default_table.c, field_name)
             else:
                 raise ValueError(f'Column {field_name} not found')
-
-
