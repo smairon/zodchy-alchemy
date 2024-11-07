@@ -276,16 +276,16 @@ files = [
 
 [[package]]
 name = "zodchy"
-version = "0.5.1"
+version = "0.5.2"
 description = "Collection of contracts and tools for building CQRS applications"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "zodchy-0.5.1-py3-none-any.whl", hash = "sha256:11b15d2656a511dfeb848c96cb751025dbb8367c7e42aad46ffa6003e67e2d12"},
-    {file = "zodchy-0.5.1.tar.gz", hash = "sha256:4c27edde4e028bd99e6e8167da9482240312926727bff810d1a15d1eeab956d6"},
+    {file = "zodchy-0.5.2-py3-none-any.whl", hash = "sha256:9cf02f552f606378c68bf524ac5a39c4d3063b5a4d562afd07946706271d1aa4"},
+    {file = "zodchy-0.5.2.tar.gz", hash = "sha256:203229f7c8f9166fbafc7f486463012a3ca51a0cfe53507418ebca68d6468a03"},
 ]
 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "726cbe49cc0add66047411f902e115fc44eac631fea770ab80d45120deaf890a"
+content-hash = "8619f364a5586d60917d8496ec9304d6d28bd5655f1d15bce032620b2d2ebe01"
