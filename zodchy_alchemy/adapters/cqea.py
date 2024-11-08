@@ -15,14 +15,24 @@ class QueryAdapter:
         self._names_map = names_map
         self._default_table = default_table
 
-    def __call__(self, query: zodchy.codex.cqea.Query) -> collections.abc.Iterable[Clause]:
+    def __call__(
+        self,
+        query: zodchy.codex.cqea.Query
+    ) -> collections.abc.Iterable[Clause | zodchy.codex.query.SliceBit]:
         for name, value in query:
-            yield Clause(self._build_column(name), value)
+            if isinstance(value, zodchy.codex.query.SliceBit):
+                yield value
+            else:
+                if (column := self._build_column(name)) is not None:
+                    yield Clause(column, value)
 
-    def _build_column(self, field_name: str) -> sqlalchemy.Column:
-        if self._names_map is not None and (column := self._names_map.get(field_name)):
+    def _build_column(self, field_name: str) -> sqlalchemy.Column | None:
+        column = self._names_map.get(field_name) if self._names_map else None
+        if column is not None:
             if isinstance(column, sqlalchemy.Column):
                 return column
+            elif column == zodchy.types.Skip:
+                return None
             elif self._default_table is not None:
                 return getattr(self._default_table.c, column)
             else:
@@ -32,3 +42,4 @@ class QueryAdapter:
                 return getattr(self._default_table.c, field_name)
             else:
                 raise ValueError(f'Column {field_name} not found')
+

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zodchy-alchemy"
-version = "0.1.6"
+version = "0.1.7"
 description = "SqlAlchemy query builder for Zodchy operators"
 authors = ["Feofilaktov, Sergey <man@smairon.ru>"]
 readme = "README.md"
@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 sqlalchemy = "^2.0.4"
-zodchy = "^0.5.3"
+zodchy = "^0.5.4"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
