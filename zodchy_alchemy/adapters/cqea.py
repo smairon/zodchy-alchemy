@@ -1,3 +1,4 @@
+import typing
 import collections.abc
 
 import sqlalchemy
@@ -16,10 +17,13 @@ class QueryAdapter:
         self._default_table = default_table
 
     def __call__(
-        self,
-        query: zodchy.codex.cqea.Query
+        self, query: zodchy.codex.cqea.Query
     ) -> collections.abc.Iterable[Clause | zodchy.codex.query.SliceBit]:
         for name, value in query:
+            if type(value) is typing.TypeAliasType:
+                value = value.__value__
+            if value is zodchy.types.Empty:
+                continue
             if isinstance(value, zodchy.codex.query.SliceBit):
                 yield value
             else:
