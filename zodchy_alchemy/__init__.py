@@ -6,6 +6,10 @@ from .assemblers import (
     JoinsAssembler,
     MutationAssembler
 )
+from .contracts import (
+    Clause,
+    ClauseExpression
+)
 from . import (
     adapters,
     serializers
