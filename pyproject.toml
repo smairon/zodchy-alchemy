@@ -1,22 +1,20 @@
 [tool.poetry]
 name = "zodchy-alchemy"
-version = "0.0.0"
+version = "0.2.0"
 description = "SqlAlchemy query builder for Zodchy operators"
 authors = ["Feofilaktov, Sergey <man@smairon.ru>"]
 readme = "README.md"
+repository = "https://github.com/smairon/zodchy-alchemy"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-sqlalchemy = "^2.0.4"
-zodchy = "^0.5.4"
+sqlalchemy = "^2.0"
+zodchy = "^0"
 
-[tool.poetry.group.dev.dependencies]
+[tool.poetry.dev-dependencies]
 pytest = "^8.3.2"
-sqlalchemy-schema-factory = "^0.2.0"
+sqlalchemy-schema-factory = "^0"
 
-[tool.poetry-dynamic-versioning]
-enable = true
-
-[build-systemsdf]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
-build-backend = "poetry_dynamic_versioning.backend"
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
