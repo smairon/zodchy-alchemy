@@ -247,13 +247,13 @@ sqlcipher = ["sqlcipher3_binary"]
 
 [[package]]
 name = "sqlalchemy-schema-factory"
-version = "0.3.0"
+version = "0.3.1"
 description = "Collection of tools for building sqlalchemy schemas"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "sqlalchemy_schema_factory-0.3.0-py3-none-any.whl", hash = "sha256:d9fc415a17c790fbca20ee07e710800e759024f22073c311fb8e9a1784ad3b7f"},
-    {file = "sqlalchemy_schema_factory-0.3.0.tar.gz", hash = "sha256:4250ba7b3f6ffe03f92658b8112eaec695e8846a43dc677f64171498ff4b9b29"},
+    {file = "sqlalchemy_schema_factory-0.3.1-py3-none-any.whl", hash = "sha256:b3936e8c2688314f6829ee4225cb29346bcc6f209557a5448cf48668b9990fac"},
+    {file = "sqlalchemy_schema_factory-0.3.1.tar.gz", hash = "sha256:5710525baa04f79b98ab3351abe918bb0b3804932c8923cf1d6d25777f75cb3f"},
 ]
 
 [package.dependencies]
@@ -272,13 +272,13 @@ files = [
 
 [[package]]
 name = "zodchy"
-version = "0.6.0"
+version = "0.6.3"
 description = "Collection of contracts and tools for building CQRS applications"
 optional = false
 python-versions = "<4.0,>=3.11"
 files = [
-    {file = "zodchy-0.6.0-py3-none-any.whl", hash = "sha256:128f05309e98138c0356ae7e810a4146e68c5a216b0972b35b202a6a4f7765de"},
-    {file = "zodchy-0.6.0.tar.gz", hash = "sha256:dfb9699d2492374ab1be64715cf52adcb72061a0a02e814a4307cc1a4d10f330"},
+    {file = "zodchy-0.6.3-py3-none-any.whl", hash = "sha256:5ed454ee402ec7d893e108ca550679b2a615a82275cf2d0ed0c034bd79fffc37"},
+    {file = "zodchy-0.6.3.tar.gz", hash = "sha256:be8fd377ccb57eced38434b2e1fcfd1003ea6767c3b6ea206e682970b95b37e3"},
 ]
 
 [metadata]

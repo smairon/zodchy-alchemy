@@ -1,11 +1,35 @@
 import typing
 import collections.abc
-
 import sqlalchemy
+import sqlalchemy.ext.asyncio
 import zodchy
 
 AND = typing.NewType('AND', object)
 OR = typing.NewType('OR', object)
+
+
+
+class EngineContract(sqlalchemy.ext.asyncio.AsyncEngine):
+    pass
+
+
+class ConnectionContract(sqlalchemy.ext.asyncio.AsyncConnection):
+    pass
+
+
+class ReadConnectionContract(ConnectionContract):
+    pass
+
+
+class WriteConnectionContract(ConnectionContract):
+    pass
+
+class WriteTransactionContract(sqlalchemy.ext.asyncio.AsyncTransaction):
+    pass
+
+
+class ReadTransactionContract(sqlalchemy.ext.asyncio.AsyncTransaction):
+    pass
 
 
 class Clause:
