@@ -2,7 +2,7 @@ import typing
 import uuid
 from functools import singledispatch
 
-from sqlalchemy import Row  # type: ignore[import-not-found]
+from sqlalchemy import Row
 
 
 def to_dict(data: Row) -> dict[str, typing.Any]:

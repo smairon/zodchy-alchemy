@@ -2,8 +2,8 @@ import collections.abc
 import enum
 import typing
 
-import sqlalchemy  # type: ignore[import-not-found]
-import sqlalchemy.ext.asyncio  # type: ignore[import-not-found]
+import sqlalchemy
+import sqlalchemy.ext.asyncio
 import zodchy
 
 

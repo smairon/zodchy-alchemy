@@ -51,3 +51,26 @@ def test_cannot_update_multiple_rows(assembler):
 def test_deleting(assembler):
     q = str(assembler(contracts.Clause(schema.hardware.c.id, operator.EQ(1))))
     assert q == "DELETE FROM hardware WHERE hardware.id = :id_1"
+
+
+def test_deleting_with_clause_expression(assembler: MutationAssembler) -> None:
+    clause = contracts.Clause(schema.hardware.c.id, operator.EQ(1)) & contracts.Clause(
+        schema.hardware.c.revision,
+        operator.GE("1.0"),
+    )
+    q = str(assembler(clause))
+    assert "hardware.id = :id_1" in q and "hardware.revision >= :revision_1" in q
+
+
+def test_returns_none_for_empty_input(assembler: MutationAssembler) -> None:
+    assert assembler() is None
+
+
+def test_rejects_non_filter_clause(assembler: MutationAssembler) -> None:
+    with pytest.raises(ValueError, match="Expected a filter"):
+        assembler(contracts.Clause(schema.hardware.c.id, operator.ASC()))
+
+
+def test_update_requires_filters(assembler: MutationAssembler) -> None:
+    with pytest.raises(ValueError, match="Expected at least one filter"):
+        assembler._update([dict(name="test")], [])

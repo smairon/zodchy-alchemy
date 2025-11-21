@@ -56,3 +56,9 @@ def test_complex(assembler):
     assert "ORDER BY hardware.name DESC" in q
     assert "LIMIT :param_1" in q
     assert "OFFSET :param_2" in q
+
+
+def test_invalid_clause_kind_raises(assembler):
+    bad_clause = contracts.Clause(schema.firmware.c.id, operator.ClauseBit())
+    with pytest.raises(ValueError, match="Expected a filter, order or slice clause"):
+        assembler(bad_clause)

@@ -1,6 +1,6 @@
 [project]
 name = "zodchy-alchemy"
-version = "1.0.0"
+version = "1.0.1"
 description = "Zodchy Alchemy - SQLAlchemy integration for zodchy architecture"
 authors = [
     {name = "Smairon", email = "man@smairon.ru"},

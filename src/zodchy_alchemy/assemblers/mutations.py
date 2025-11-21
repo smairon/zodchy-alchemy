@@ -1,6 +1,6 @@
 import collections.abc
 
-import sqlalchemy  # type: ignore[import-not-found]
+import sqlalchemy
 import zodchy
 
 from .. import contracts
