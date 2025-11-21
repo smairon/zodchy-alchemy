@@ -1,10 +1,10 @@
 import pytest
-import sqlalchemy
+import sqlalchemy  # type: ignore[import-not-found]
 
 from . import schema
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def base_query():
     return sqlalchemy.select(
         schema.firmware.c.id,
@@ -13,6 +13,6 @@ def base_query():
     )
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def base_table():
     return schema.hardware

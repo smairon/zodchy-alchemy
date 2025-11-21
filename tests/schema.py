@@ -1,6 +1,6 @@
 import enum
 
-from sqlalchemy_schema_factory import factory
+from sqlalchemy_schema_factory import factory  # type: ignore[import-not-found]
 
 
 class DeviceGroupKind(str, enum.Enum):
@@ -32,7 +32,7 @@ event = factory.actions_tracked_table(
 )
 
 group = factory.actions_tracked_table(
-    name='',
+    name="",
     db_metadata=db_metadata,
     columns=(
         factory.uuid_primary_key(),
@@ -59,9 +59,7 @@ hardware = factory.table(
         factory.uuid_primary_key(),
         factory.string(name="name", nullable=False),
         factory.string(name="revision", nullable=False),
-        factory.foreign_key(
-            to_=hardware_platform, on_=hardware_platform.c.id, name="platform_id"
-        ),
+        factory.foreign_key(to_=hardware_platform, on_=hardware_platform.c.id, name="platform_id"),
     ),
 )
 

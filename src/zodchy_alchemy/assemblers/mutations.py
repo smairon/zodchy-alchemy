@@ -1,6 +1,6 @@
 import collections.abc
 
-import sqlalchemy
+import sqlalchemy  # type: ignore[import-not-found]
 import zodchy
 
 from .. import contracts
@@ -14,7 +14,9 @@ class MutationAssembler:
         self._table = table
         self._filter_assembler = FilterAssembler()
 
-    def __call__(self, *elements: DataRow | contracts.Clause | contracts.ClauseExpression):
+    def __call__(
+        self, *elements: DataRow | contracts.Clause | contracts.ClauseExpression
+    ) -> sqlalchemy.Update | sqlalchemy.Insert | sqlalchemy.Delete | None:
         data, filters = self._separate(elements)
         if data and filters:
             return self._update(data, filters)
@@ -22,33 +24,36 @@ class MutationAssembler:
             return self._insert(data)
         elif len(data) == 0 and len(filters) > 0:
             return self._delete(filters)
+        return None
 
-    def _update(self, data: list[DataRow], filters: list[contracts.Clause | contracts.ClauseExpression]):
+    def _update(
+        self, data: list[DataRow], filters: list[contracts.Clause | contracts.ClauseExpression]
+    ) -> sqlalchemy.Update:
         if len(data) > 1:
-            raise ValueError(f'Expected only one data item, got {len(data)}')
+            raise ValueError(f"Expected only one data item, got {len(data)}")
         if len(filters) == 0:
-            raise ValueError(f'Expected at least one filter, got {len(filters)}')
+            raise ValueError(f"Expected at least one filter, got {len(filters)}")
         return sqlalchemy.update(self._table).values(**data[0]).where(self._filter_assembler(*filters))
 
-    def _insert(self, data: list[DataRow]):
+    def _insert(self, data: list[DataRow]) -> sqlalchemy.Insert:
         return sqlalchemy.insert(self._table).values(data)
 
-    def _delete(self, filters: list[contracts.Clause | contracts.ClauseExpression]):
+    def _delete(self, filters: list[contracts.Clause | contracts.ClauseExpression]) -> sqlalchemy.Delete:
         return sqlalchemy.delete(self._table).where(self._filter_assembler(*filters))
 
     @staticmethod
     def _separate(
-        elements: collections.abc.Iterable[DataRow | contracts.Clause | contracts.ClauseExpression]
-    ):
+        elements: collections.abc.Iterable[DataRow | contracts.Clause | contracts.ClauseExpression],
+    ) -> tuple:
         data = []
-        filters = []
+        filters: list[contracts.Clause | contracts.ClauseExpression] = []
 
         for element in elements:
             if isinstance(element, contracts.Clause):
-                if zodchy.codex.query.FilterBit in element.operation.__class__.__mro__:
+                if zodchy.codex.operator.FilterBit in element.operation.__class__.__mro__:
                     filters.append(element)
                 else:
-                    raise ValueError(f'Expected a filter, got {element.operation}')
+                    raise ValueError(f"Expected a filter, got {element.operation}")
             elif isinstance(element, contracts.ClauseExpression):
                 filters.append(element)
             elif isinstance(element, DataRow):

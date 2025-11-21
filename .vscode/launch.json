@@ -1,0 +1,88 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src"
+            }
+        },
+        {
+            "name": "Python: Examples - Basic",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/basic_usage.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src"
+            }
+        },
+        {
+            "name": "Python: Examples - Advanced",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/advanced_usage.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src"
+            }
+        },
+        {
+            "name": "Python: Examples with Args",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/examples/${fileBasenameNoExtension}.py",
+            "args": ["--verbose", "--input", "data.json"],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src"
+            }
+        },
+        {
+            "name": "Python: Module",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "zodchy",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src"
+            }
+        },
+        {
+            "name": "Debug Selected Test",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "${file}",
+                "-v",
+                "-s",
+                "-k",
+                "${selectedText}"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src"
+            }
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Python: Examples All",
+            "configurations": [
+                "Python: Examples - Basic",
+                "Python: Examples - Advanced"
+            ]
+        }
+    ]
+}

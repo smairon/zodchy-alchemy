@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 
 import pytest
-import zodchy
+from zodchy.codex import operator
 
 from zodchy_alchemy import FilterAssembler
 from zodchy_alchemy import contracts
@@ -16,71 +16,54 @@ def assembler(base_query):
 
 
 def test_single(assembler):
-    q = str(assembler(
-        contracts.Clause(
-            schema.firmware.c.id,
-            zodchy.operators.EQ(uuid.uuid4())
-        )
-    )).strip()
-    assert 'firmware.id = :id_1' in q
+    q = str(assembler(contracts.Clause(schema.firmware.c.id, operator.EQ(uuid.uuid4())))).strip()
+    assert "firmware.id = :id_1" in q
+
 
 def test_and(assembler):
-    q = str(assembler(
-        contracts.Clause(
-            schema.firmware.c.id,
-            zodchy.operators.EQ(uuid.uuid4())
-        ) & contracts.Clause(
-            schema.firmware.c.created_at,
-            zodchy.operators.GE(datetime.utcnow())
+    q = str(
+        assembler(
+            contracts.Clause(schema.firmware.c.id, operator.EQ(uuid.uuid4()))
+            & contracts.Clause(schema.firmware.c.created_at, operator.GE(datetime.utcnow()))
         )
-    )).strip()
-    assert 'firmware.id = :id_1 AND firmware.created_at >= :created_at_1' in q
+    ).strip()
+    assert "firmware.id = :id_1 AND firmware.created_at >= :created_at_1" in q
+
 
 def test_or(assembler):
-    q = str(assembler(
-        contracts.Clause(
-            schema.firmware.c.id,
-            zodchy.operators.EQ(uuid.uuid4())
-        ) | contracts.Clause(
-            schema.firmware.c.created_at,
-            zodchy.operators.GE(datetime.utcnow())
+    q = str(
+        assembler(
+            contracts.Clause(schema.firmware.c.id, operator.EQ(uuid.uuid4()))
+            | contracts.Clause(schema.firmware.c.created_at, operator.GE(datetime.utcnow()))
         )
-    )).strip()
-    assert 'firmware.id = :id_1 OR firmware.created_at >= :created_at_1' in q
+    ).strip()
+    assert "firmware.id = :id_1 OR firmware.created_at >= :created_at_1" in q
+
 
 def test_and_big(assembler):
-    q = str(assembler(
-        contracts.Clause(
-            schema.firmware.c.id,
-            zodchy.operators.EQ(uuid.uuid4())
-        ) & contracts.Clause(
-            schema.firmware.c.created_at,
-            zodchy.operators.GE(datetime.utcnow())
-        ) & contracts.Clause(
-            schema.firmware.c.version,
-            zodchy.operators.EQ('1.0')
+    q = str(
+        assembler(
+            contracts.Clause(schema.firmware.c.id, operator.EQ(uuid.uuid4()))
+            & contracts.Clause(schema.firmware.c.created_at, operator.GE(datetime.utcnow()))
+            & contracts.Clause(schema.firmware.c.version, operator.EQ("1.0"))
         )
-    )).strip()
-    assert 'firmware.id = :id_1 AND firmware.created_at >= :created_at_1 AND firmware.version = :version_1' in q
+    ).strip()
+    assert "firmware.id = :id_1 AND firmware.created_at >= :created_at_1 AND firmware.version = :version_1" in q
+
 
 def test_complex(assembler):
-    q = str(assembler(
-        contracts.Clause(
-            schema.firmware.c.id,
-            zodchy.operators.EQ(uuid.uuid4())
-        ) & (
-            contracts.Clause(
-            schema.firmware.c.created_at,
-            zodchy.operators.GE(datetime.utcnow())
-        ) & contracts.Clause(
-            schema.firmware.c.version,
-            zodchy.operators.EQ('1.0')
-        ) | contracts.Clause(
-            schema.firmware.c.created_at,
-            zodchy.operators.LE(datetime.utcnow())
-        )  & contracts.Clause(
-            schema.firmware.c.version,
-            zodchy.operators.EQ('2.0')
-        ))
-    )).strip()
-    assert '(firmware.created_at <= :created_at_1 AND firmware.version = :version_1 OR firmware.created_at >= :created_at_2 AND firmware.version = :version_2) AND firmware.id = :id_1' in q
+    q = str(
+        assembler(
+            contracts.Clause(schema.firmware.c.id, operator.EQ(uuid.uuid4()))
+            & (
+                contracts.Clause(schema.firmware.c.created_at, operator.GE(datetime.utcnow()))
+                & contracts.Clause(schema.firmware.c.version, operator.EQ("1.0"))
+                | contracts.Clause(schema.firmware.c.created_at, operator.LE(datetime.utcnow()))
+                & contracts.Clause(schema.firmware.c.version, operator.EQ("2.0"))
+            )
+        )
+    ).strip()
+    assert (
+        "(firmware.created_at <= :created_at_1 AND firmware.version = :version_1 OR firmware.created_at >= :created_at_2 AND firmware.version = :version_2) AND firmware.id = :id_1"
+        in q
+    )

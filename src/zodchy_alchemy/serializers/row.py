@@ -1,9 +1,8 @@
 import typing
 import uuid
-import warnings
 from functools import singledispatch
 
-from sqlalchemy import Row
+from sqlalchemy import Row  # type: ignore[import-not-found]
 
 
 def to_dict(data: Row) -> dict[str, typing.Any]:
@@ -14,16 +13,16 @@ def to_dict(data: Row) -> dict[str, typing.Any]:
 
 
 @singledispatch
-def field_serializer(value):
+def field_serializer(value: typing.Any) -> typing.Any:
     return value
 
 
 try:
-    import asyncpg.pgproto.pgproto
-
+    import asyncpg.pgproto.pgproto  # type: ignore[import-not-found]
 
     @field_serializer.register
     def _(value: asyncpg.pgproto.pgproto.UUID) -> uuid.UUID:
         return uuid.UUID(bytes=value.bytes)
-except Exception as e:
-    warnings.warn(f'asyncpg not installed: {e}')
+
+except Exception:
+    pass
